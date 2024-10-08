@@ -52,6 +52,30 @@ public class EmployeeRestController {
 
 
     //add mapping para PUT /employees - update funcionário existente
-    @Mapping("/employees")
-    public Employee updateEmployee()
-}
+    @PutMapping("/employees")
+    public Employee updateEmployee(@RequestBody Employee theEmployee){
+        Employee dbEmployee = employeeService.save(theEmployee);
+
+        return dbEmployee;
+    }
+
+    //mapping para DELETE /employees/{employeeId}
+    @DeleteMapping("/employees/{employeeId}")
+        public String deleteEmployee(@PathVariable int employeeId){
+
+            Employee tempEmployee = employeeService.findById(employeeId);
+
+            //checa se id existe, caso nao throw exception
+
+            if(tempEmployee == null){
+                throw new RuntimeException("Id " + employeeId + " não encontrado!");
+            }
+
+            employeeService.deleteById(employeeId);
+
+            return "Cadastro de ID "+employeeId+" deletado com sucesso.";
+
+        }
+
+    }
+
