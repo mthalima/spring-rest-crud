@@ -60,6 +60,10 @@ public class SecurityConfig {
 
         //USA AUTENTICACAO BASICA HTTP
         http.httpBasic(Customizer.withDefaults());
-        return null;
+
+        //DISAPLE CROSS SITE REQUEST FORGERY - CSRF
+        http.csrf(csrf -> csrf.disable());
+
+        return http.build();
     }
 }
